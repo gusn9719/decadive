@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.MemberDAO">
+
+    <!-- 공통 SELECT -->
+    <sql id="selectMemberFields">
+        SELECT id,
+               password,
+               name,
+               email,
+               phone,
+               type,
+               TO_CHAR(reg_date, 'yyyy-mm-dd') AS regDate
+        FROM deca_member
+    </sql>
+
+    <!-- 회원가입 (type 생략 → DEFAULT 0 적용) -->
+    <insert id="insertMember" parameterType="memberVO">
+        INSERT INTO deca_member(id, password, name, email, phone)
+        VALUES(#{id}, #{password}, #{name}, #{email}, #{phone})
+    </insert>
+
+    <!-- 아이디 중복확인 -->
+    <select id="existsId" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM deca_member
+        WHERE id = #{id}
+    </select>
+
+    <!-- 로그인 -->
+    <select id="findMemberForLogin" parameterType="memberVO" resultType="memberVO">
+        <include refid="selectMemberFields" />
+        WHERE id = #{id}
+          AND password = #{password}
+    </select>
+
+    <!-- ID로 회원 조회 -->
+    <select id="findMemberById" parameterType="string" resultType="memberVO">
+        <include refid="selectMemberFields" />
+        WHERE id = #{id}
+    </select>
+
+</mapper>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.ItemDAO">
+
+	<!-- 공통 SELECT : DECA_ITEM 기본 컬럼 -->
+	<sql id="selectItem">
+		SELECT item_no AS itemNo
+		, name
+		, price
+		, era
+		, category
+		,
+		image_path AS imagePath
+		, TO_CHAR(reg_date, 'yyyy-mm-dd') AS regDate
+		FROM DECA_ITEM
+	</sql>
+
+	<!-- 핵심 기능용 동적 조회 -->
+	<!-- - 전체 조회 : era/category/name 전부 null -->
+	<!-- - 연도별 조회: era만 세팅 -->
+	<!-- - 연도 + 카테고리별 조회 : era + category 세팅 -->
+	<!-- - 이름 검색 : name만 세팅 (또는 era+name 같이도 가능) -->
+	<select id="selectByCondition" parameterType="itemVO"
+		resultType="itemVO">
+		<include refid="selectItem" />
+		<where>
+			<if test="era != null">
+				era = #{era}
+			</if>
+			<if test="category != null">
+				AND category = #{category}
+			</if>
+			<if test="name != null and name != ''">
+				AND instr(name, #{name}) = 1
+			</if>
+		</where>
+		ORDER BY item_no DESC
+	</select>
+
+	<!-- 상세 페이지용 단건 조회 -->
+	<select id="selectByNo" parameterType="int" resultType="itemVO">
+		<include refid="selectItem" />
+		WHERE item_no = #{itemNo}
+	</select>
+
+	<!-- ===================== -->
+	<!-- ITEM-002 : 상세 페이지용 단건 조회 (설명까지 join) -->
+	<!-- ===================== -->
+	<select id="selectDetailByNo" parameterType="int"
+		resultType="itemVO">
+		SELECT
+		i.item_no AS itemNo
+		, i.name
+		, i.price
+		, i.era
+		, i.category
+		, i.image_path AS imagePath
+		, TO_CHAR(i.reg_date, 'yyyy-mm-dd') AS regDate
+		, d.description AS description
+		FROM DECA_ITEM i
+		LEFT JOIN DECA_ITEM_DETAIL d
+		ON d.item_no = i.item_no
+		WHERE i.item_no = #{itemNo}
+	</select>
+
+
+	<!-- ===================== -->
+	<!-- 관리자 : 상품 등록 -->
+	<!-- ===================== -->
+
+	<!-- 1) 기본 상품 등록 (DECA_ITEM) - selectKey 로 itemNo 를 미리 뽑아서 VO 에 세팅 -->
+	<insert id="insertItem" parameterType="itemVO">
+		<selectKey keyProperty="itemNo" resultType="int"
+			order="BEFORE">
+			SELECT SEQ_DECA_ITEM_NO.NEXTVAL FROM DUAL
+		</selectKey>
+
+		INSERT INTO DECA_ITEM(
+		item_no, name, price, era, category, image_path
+		)
+		VALUES(
+		#{itemNo},
+		#{name},
+		#{price},
+		#{era},
+		#{category},
+		#{imagePath}
+		)
+	</insert>
+
+	<!-- 2) 상품 설명 등록 (DECA_ITEM_DETAIL) -->
+	<insert id="insertItemDetail" parameterType="itemVO">
+		INSERT INTO
+		DECA_ITEM_DETAIL(item_no, description)
+		VALUES(#{itemNo},
+		#{description})
+	</insert>
+
+</mapper>

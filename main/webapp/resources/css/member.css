@@ -1,0 +1,102 @@
+@charset "UTF-8";
+/* 한글용 폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+
+
+/* 카드 안쪽은 도현체 기준으로 통일 */
+.form-card,
+.form-card * {
+    font-family: 'Do Hyeon', system-ui, sans-serif !important;
+    letter-spacing: 0.4px;
+}
+
+/* 카드 레이아웃 */
+.form-card {
+    width: 420px;
+    margin: 60px auto;
+    padding: 32px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+}
+
+/* 제목 */
+.form-card h2 {
+    text-align: center;
+    margin-bottom: 26px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* 라벨 */
+.form-card label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 15px;
+}
+
+/* 입력창 기본 */
+.form-input {
+    width: 100%;
+    padding: 11px 12px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #bbb;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+/* placeholder 색 */
+.form-input::placeholder {
+    color: #aaa;
+}
+
+/* 에러가 있는 인풋 */
+.field-error {
+    border-color: #e53935 !important;
+    background-color: #fff5f5;
+}
+
+/* 전역 에러 (아이디 중복 등) */
+.global-error {
+    margin-bottom: 14px;
+    font-size: 13px;
+}
+
+/* 에러 문구 */
+.form-error {
+    margin-top: 2px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    color: #e53935;
+}
+
+/* 제출 버튼 */
+.btn-submit {
+    width: 100%;
+    padding: 13px;
+    margin-top: 12px;
+    border-radius: 6px;
+    border: none;
+    background: #222;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+.btn-submit:hover {
+    background: #444;
+}
+
+/* 하단 링크 */
+.form-bottom-link {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 14px;
+}
+.form-bottom-link a {
+    color: #457b9d;
+    text-decoration: none;
+}
+.form-bottom-link a:hover {
+    text-decoration: underline;
+}

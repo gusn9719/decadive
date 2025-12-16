@@ -1,0 +1,179 @@
+@charset "UTF-8";
+
+/* 한글용 폰트 */
+@import
+	url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+
+/* 공통으로 쓸 폰트 */
+.cart-page, .cart-page * {
+	font-family: 'Do Hyeon', system-ui, sans-serif;
+}
+
+/* 페이지 컨테이너 */
+.cart-page {
+	max-width: 960px;
+	margin: 40px auto 60px;
+	padding: 0 16px;
+}
+
+/* 상단 제목 & 요약 라인 */
+.cart-header-line {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	margin-bottom: 16px;
+}
+
+.cart-title {
+	font-size: 22px;
+	font-weight: bold;
+}
+
+.cart-count-text {
+	font-size: 13px;
+	color: #666;
+}
+
+/* 비어 있을 때 */
+.cart-empty {
+	text-align: center;
+	margin-top: 60px;
+	font-size: 15px;
+	color: #777;
+}
+
+/* 장바구니 아이템 리스트 */
+.cart-list {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+/* 각 행(아이템) */
+.cart-item {
+	display: flex;
+	align-items: center;
+	padding: 12px 14px;
+	background: #ffffff;
+	border-radius: 10px;
+	border: 1px solid #ddd;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+/* 썸네일 */
+.cart-thumb {
+	width: 72px;
+	height: 72px;
+	border-radius: 8px;
+	object-fit: cover;
+	border: 1px solid #ccc;
+	margin-right: 14px;
+}
+
+/* 가운데 영역(상품명 등) */
+.cart-item-main {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.cart-item-name {
+	font-size: 16px;
+}
+
+.cart-item-meta {
+	font-size: 12px;
+	color: #888;
+}
+
+/* 오른쪽 영역(수량/가격) */
+.cart-item-qty-price {
+	min-width: 150px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 4px;
+}
+
+.cart-item-qty {
+	font-size: 13px;
+}
+
+.cart-item-price {
+	font-size: 13px;
+	color: #444;
+}
+
+.cart-item-subtotal {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+/* 합계 영역 */
+.cart-total-box {
+	margin-top: 20px;
+	padding: 14px 16px;
+	background: #111;
+	color: #f5f5f5;
+	border-radius: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.cart-total-label {
+	font-size: 14px;
+	opacity: 0.8;
+}
+
+.cart-total-price {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+/* 버튼 영역 */
+.cart-actions {
+	margin-top: 18px;
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+}
+
+/* 버튼 스타일 (간단 공통) */
+.btn-outline, .btn-primary {
+	padding: 10px 16px;
+	border-radius: 6px;
+	font-size: 14px;
+	text-decoration: none;
+	cursor: pointer;
+	border: 1px solid #333;
+	background: #fff;
+	color: #111;
+}
+
+.btn-outline:hover {
+	background: #f0f0f0;
+}
+
+.btn-primary {
+	background: #111;
+	color: #f5f5f5;
+}
+
+.btn-primary:hover {
+	background: #333;
+}
+
+
+.cart-empty .user-link {
+	display: inline-block;
+	margin-top: 6px;
+	font-size: 14px;
+	color: #222; /* 진한 글자색으로 변경 */
+	text-decoration: underline;
+}
+
+.cart-empty .user-link:hover {
+	color: #e63946; /* 레트로 포인트 컬러 */
+}
