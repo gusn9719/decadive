@@ -46,9 +46,9 @@
 		WHERE item_no = #{itemNo}
 	</select>
 
-	<!-- ===================== -->
-	<!-- ITEM-002 : 상세 페이지용 단건 조회 (설명까지 join) -->
-	<!-- ===================== -->
+
+	<!-- 상세 페이지용 단건 조회 -->
+
 	<select id="selectDetailByNo" parameterType="int"
 		resultType="itemVO">
 		SELECT
@@ -56,21 +56,20 @@
 		, i.name
 		, i.price
 		, i.era
-		, i.category
+		,
+		i.category
 		, i.image_path AS imagePath
-		, TO_CHAR(i.reg_date, 'yyyy-mm-dd') AS regDate
+		, TO_CHAR(i.reg_date,
+		'yyyy-mm-dd') AS regDate
 		, d.description AS description
 		FROM DECA_ITEM i
 		LEFT JOIN DECA_ITEM_DETAIL d
 		ON d.item_no = i.item_no
-		WHERE i.item_no = #{itemNo}
+		WHERE i.item_no =
+		#{itemNo}
 	</select>
 
-
-	<!-- ===================== -->
 	<!-- 관리자 : 상품 등록 -->
-	<!-- ===================== -->
-
 	<!-- 1) 기본 상품 등록 (DECA_ITEM) - selectKey 로 itemNo 를 미리 뽑아서 VO 에 세팅 -->
 	<insert id="insertItem" parameterType="itemVO">
 		<selectKey keyProperty="itemNo" resultType="int"
@@ -99,4 +98,49 @@
 		#{description})
 	</insert>
 
+	<!-- 상품 수정 -->
+	<update id="updateItem" parameterType="itemVO">
+		UPDATE deca_item
+		SET name =
+		#{name},
+		price = #{price},
+		era = #{era},
+		category = #{category}
+		WHERE
+		item_no = #{itemNo}
+	</update>
+
+	<!-- 상세문구 (있으면 update, 없으면 insert) -->
+	<update id="upsertItemDetail" parameterType="itemVO">
+		MERGE INTO
+		deca_item_detail d
+		USING (SELECT #{itemNo} AS item_no, #{description}
+		AS description FROM
+		dual) s
+		ON (d.item_no = s.item_no)
+		WHEN MATCHED THEN
+		UPDATE SET d.description = s.description
+		WHEN NOT MATCHED THEN
+		INSERT
+		(item_no, description) VALUES (s.item_no,
+		s.description)
+	</update>
+
+	<!-- 상세 먼저 삭제 -->
+	<delete id="deleteItemDetail" parameterType="int">
+		DELETE FROM
+		deca_item_detail
+		WHERE item_no = #{itemNo}
+	</delete>
+
+	<!-- 상품 삭제 -->
+	<delete id="deleteItem" parameterType="int">
+		DELETE FROM deca_item
+		WHERE item_no = #{itemNo}
+	</delete>
+	
+	<delete id="deleteCartItemsByItemNo" parameterType="int">
+		DELETE FROM deca_cart_d
+		WHERE item_no = #{itemNo}
+	</delete>
 </mapper>

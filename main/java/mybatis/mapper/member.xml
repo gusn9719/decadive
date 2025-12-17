@@ -5,42 +5,49 @@
 
 <mapper namespace="dao.MemberDAO">
 
-    <!-- 공통 SELECT -->
-    <sql id="selectMemberFields">
-        SELECT id,
-               password,
-               name,
-               email,
-               phone,
-               type,
-               TO_CHAR(reg_date, 'yyyy-mm-dd') AS regDate
-        FROM deca_member
-    </sql>
+	<!-- 공통 SELECT -->
+	<sql id="selectMemberFields">
+		SELECT id,
+		password,
+		name,
+		email,
+		phone,
+		type,
+		TO_CHAR(reg_date, 'yyyy-mm-dd') AS regDate
+		FROM deca_member
+	</sql>
 
-    <!-- 회원가입 (type 생략 → DEFAULT 0 적용) -->
-    <insert id="insertMember" parameterType="memberVO">
-        INSERT INTO deca_member(id, password, name, email, phone)
-        VALUES(#{id}, #{password}, #{name}, #{email}, #{phone})
-    </insert>
+	<select id="selectAllMembers" resultType="memberVO">
+		<include refid="selectMemberFields" />
+		ORDER BY reg_date desc
+	</select>
 
-    <!-- 아이디 중복확인 -->
-    <select id="existsId" parameterType="string" resultType="int">
-        SELECT COUNT(*)
-        FROM deca_member
-        WHERE id = #{id}
-    </select>
+	<!-- 회원가입 (type 생략 → DEFAULT 0 적용) -->
+	<insert id="insertMember" parameterType="memberVO">
+		INSERT INTO deca_member(id, password, name, email, phone)
+		VALUES(#{id}, #{password}, #{name}, #{email}, #{phone})
+	</insert>
 
-    <!-- 로그인 -->
-    <select id="findMemberForLogin" parameterType="memberVO" resultType="memberVO">
-        <include refid="selectMemberFields" />
-        WHERE id = #{id}
-          AND password = #{password}
-    </select>
+	<!-- 아이디 중복확인 -->
+	<select id="existsId" parameterType="string" resultType="int">
+		SELECT COUNT(*)
+		FROM deca_member
+		WHERE id = #{id}
+	</select>
 
-    <!-- ID로 회원 조회 -->
-    <select id="findMemberById" parameterType="string" resultType="memberVO">
-        <include refid="selectMemberFields" />
-        WHERE id = #{id}
-    </select>
+	<!-- 로그인 -->
+	<select id="findMemberForLogin" parameterType="memberVO"
+		resultType="memberVO">
+		<include refid="selectMemberFields" />
+		WHERE id = #{id}
+		AND password = #{password}
+	</select>
+
+	<!-- ID로 회원 조회 -->
+	<select id="findMemberById" parameterType="string"
+		resultType="memberVO">
+		<include refid="selectMemberFields" />
+		WHERE id = #{id}
+	</select>
 
 </mapper>

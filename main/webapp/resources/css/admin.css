@@ -1,83 +1,383 @@
 @charset "UTF-8";
 
-/* 관리자 공통 폰트 – 레이아웃 기본 폰트 그대로 사용 */
+/* =========================================================
+   ADMIN CSS (scoped)
+   - 반드시 admin JSP의 메인 section(or div)에 .admin-wrap을 붙여서 사용
+   - 그래야 item.css / layout.css 영역을 건드리지 않음
+========================================================= */
+:root {
+	--admin-font: 'Do Hyeon', system-ui, sans-serif;
+	--admin-bg: #ffffff;
+	--admin-text: #111;
+	--admin-muted: #6b7280;
+	--admin-border: #e6e6e6;
+	--admin-border-strong: #d1d5db;
+	--admin-black: #111;
+	--admin-black-2: #333;
+	--admin-danger: #c62828;
+	--admin-danger-bg: #ffeaea;
+	--admin-shadow: 0 10px 26px rgba(0, 0, 0, 0.14);
+}
 
-/* ===== 관리자용 폼 카드 ===== */
+/* ---------- scope root ---------- */
+.admin-wrap {
+	font-family: var(--admin-font);
+	color: var(--admin-text);
+}
+
+/* =========================================================
+   CARD (공통 박스)
+========================================================= */
 .admin-card {
-	width: 480px;
-	margin: 60px auto;
-	padding: 32px;
-	background: #ffffff;
-	border-radius: 14px;
-	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+	width: min(980px, calc(100% - 32px));
+	margin: 56px auto;
+	padding: 34px 34px 30px;
+	background: var(--admin-bg);
+	border-radius: 18px;
+	box-shadow: var(--admin-shadow);
 	box-sizing: border-box;
 }
 
-/* 제목 */
-.admin-card h2 {
+.admin-card--narrow {
+	width: min(560px, calc(100% - 32px));
+}
+
+.admin-title {
+	margin: 0 0 22px;
 	text-align: center;
-	margin-bottom: 26px;
-	font-size: 22px;
-	font-weight: bold;
+	font-size: 28px;
+	font-weight: 700;
+	letter-spacing: 0.4px;
 }
 
-/* 라벨 */
-.admin-card label {
-	display: block;
-	margin: 12px 0 6px;
-	font-size: 14px;
+.admin-subtitle {
+	margin: -10px 0 18px;
+	text-align: center;
+	font-size: 16px;
+	color: var(--admin-muted);
 }
 
-/* 인풋 / 셀렉트 공통 */
-.admin-card input[type="text"], .admin-card input[type="number"],
-	.admin-card select {
+/* =========================================================
+   ADMIN MENU
+========================================================= */
+.admin-menu-list {
+	margin: 18px 0 0;
+	padding: 0;
+	list-style: none;
+	display: grid;
+	gap: 10px;
+}
+
+.admin-menu-link {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 14px 14px;
+	border: 1px solid var(--admin-border);
+	border-radius: 12px;
+	text-decoration: none;
+	color: var(--admin-text);
+	background: #fff;
+	font-size: 18px;
+}
+
+.admin-menu-link:hover {
+	border-color: var(--admin-border-strong);
+	background: #fafafa;
+}
+
+.admin-menu-link::after {
+	content: "→";
+	opacity: 0.6;
+}
+
+/* =========================================================
+   TABLE (회원/상품/주문 공통)
+========================================================= */
+.admin-table-wrap {
+	margin-top: 18px;
+	overflow-x: auto;
+}
+
+.admin-table {
 	width: 100%;
-	padding: 10px 12px;
-	border-radius: 6px;
-	border: 1px solid #bbb;
-	box-sizing: border-box;
-	font-size: 14px;
+	border-collapse: collapse;
+	font-size: 16px;
+	background: #fff;
+	border: 1px solid var(--admin-border);
+	border-radius: 12px;
+	overflow: hidden;
 }
 
-/* 파일 입력 */
-.admin-card input[type="file"] {
-	padding: 6px 0;
-	font-size: 13px;
-}
-
-/* 텍스트에어리어 */
-.admin-card textarea {
-	width: 100%;
-	min-height: 120px;
-	padding: 12px;
-	border-radius: 6px;
-	border: 1px solid #bbb;
-	resize: vertical;
-	box-sizing: border-box;
-	font-size: 14px;
-}
-
-/* 버튼 – 기존 member.css 의 .btn-submit 스타일 재사용한다고 가정 */
-.admin-card .btn-submit {
-	width: 100%;
-	padding: 14px;
-	margin-top: 16px;
-	border-radius: 6px;
-	border: none;
-	background: #222;
+.admin-table thead th {
+	background: var(--admin-black);
 	color: #fff;
-	font-weight: bold;
+	padding: 14px 12px;
+	text-align: center;
+	font-weight: 400;
+	letter-spacing: 0.6px;
+	white-space: nowrap;
+}
+
+.admin-table tbody td {
+	padding: 14px 12px;
+	text-align: center;
+	border-bottom: 1px solid var(--admin-border);
+	color: #111;
+	vertical-align: middle;
+}
+
+.admin-table tbody tr:hover {
+	background: #f7f7f7;
+}
+
+.admin-empty {
+	padding: 24px 0;
+	text-align: center;
+	color: var(--admin-muted);
+	font-size: 16px;
+}
+
+.admin-role {
+	color: var(--admin-danger);
+	font-weight: 700;
+}
+
+.admin-break {
+	word-break: break-word;
+}
+
+/* =========================================================
+   BUTTONS (공용)
+========================================================= */
+.admin-actions {
+	display: flex;
+	gap: 10px;
+	justify-content: flex-end;
+	margin-top: 18px;
+	flex-wrap: wrap;
+}
+
+.admin-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10px 14px;
+	border: 1px solid var(--admin-black-2);
+	border-radius: 12px;
+	background: #fff;
+	color: #111;
+	text-decoration: none;
+	font-family: var(--admin-font);
 	font-size: 16px;
 	cursor: pointer;
 }
 
-.admin-card .btn-submit:hover {
-	background: #444;
+.admin-btn:hover {
+	background: #f3f3f3;
 }
 
-/* 에러 메시지 */
+.admin-btn--primary {
+	background: var(--admin-black);
+	color: #fff;
+	border-color: var(--admin-black);
+}
+
+.admin-btn--primary:hover {
+	background: #2a2a2a;
+}
+
+.admin-btn--danger {
+	border-color: var(--admin-danger);
+	color: var(--admin-danger);
+}
+
+.admin-btn--danger:hover {
+	background: var(--admin-danger-bg);
+}
+
+.admin-inline-form {
+	display: inline;
+}
+
+/* =========================================================
+   FORM (상품 등록/수정)
+   - itemForm.jsp가 "한 줄로 붙는 문제"를 해결하려면
+     폼에 class="admin-form" 주고,
+     각 줄을 <div class="admin-row">로 감싸는 구조가 필요함
+========================================================= */
+.admin-form {
+	margin-top: 18px;
+}
+
+.admin-row {
+	display: grid;
+	grid-template-columns: 140px 1fr;
+	gap: 12px;
+	align-items: center;
+	margin: 12px 0;
+}
+
+.admin-label {
+	font-size: 16px;
+	color: #111;
+	text-align: left;
+}
+
+.admin-input, .admin-select, .admin-textarea, .admin-file {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 12px 14px;
+	border: 1px solid var(--admin-border-strong);
+	border-radius: 12px;
+	font-size: 16px;
+	font-family: var(--admin-font);
+	background: #fff;
+}
+
+.admin-textarea {
+	min-height: 120px;
+	resize: vertical;
+}
+
+.admin-help {
+	grid-column: 2/3;
+	margin-top: -6px;
+	font-size: 14px;
+	color: var(--admin-muted);
+}
+
 .admin-error {
-	margin-bottom: 8px;
-	color: #e53935;
-	font-size: 13px;
+	margin: 10px 0 0;
+	color: var(--admin-danger);
+	font-size: 15px;
+}
+
+/* submit 버튼은 크게 */
+.admin-submit {
+	width: 100%;
+	margin-top: 18px;
+	padding: 14px 16px;
+	border-radius: 12px;
+	border: 1px solid var(--admin-black);
+	background: var(--admin-black);
+	color: #fff;
+	font-family: var(--admin-font);
+	font-size: 18px;
+	cursor: pointer;
+}
+
+.admin-submit:hover {
+	background: #2a2a2a;
+}
+
+.admin-wrap .admin-card h2 {
+	margin: 0 0 18px;
+	text-align: center;
+	font-size: 28px;
+}
+
+.admin-wrap .admin-card form.admin-form, .admin-wrap .admin-card form {
+	margin-top: 18px;
+	display: grid;
+	grid-template-columns: 140px 1fr;
+	column-gap: 14px;
+	row-gap: 12px;
+	align-items: center;
+}
+
+/* label은 왼쪽 컬럼 */
+.admin-wrap .admin-card form.admin-form>label, .admin-wrap .admin-card form>label
+	{
+	grid-column: 1/2;
+	font-size: 16px;
+	color: #111;
+}
+
+/* input/select/textarea/file은 오른쪽 컬럼 */
+.admin-wrap .admin-card form.admin-form>input, .admin-wrap .admin-card form.admin-form>select,
+	.admin-wrap .admin-card form.admin-form>textarea, .admin-wrap .admin-card form>input,
+	.admin-wrap .admin-card form>select, .admin-wrap .admin-card form>textarea
+	{
+	grid-column: 2/3;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 12px 14px;
+	border: 1px solid #d1d5db;
+	border-radius: 12px;
+	font-size: 16px;
+	background: #fff;
+}
+
+/* textarea 높이 */
+.admin-wrap .admin-card form.admin-form>textarea, .admin-wrap .admin-card form>textarea
+	{
+	min-height: 120px;
+	resize: vertical;
+}
+
+/* submit 버튼은 한 줄 꽉 */
+.admin-wrap .admin-card form.admin-form>button, .admin-wrap .admin-card form>button
+	{
+	grid-column: 1/3;
+	width: 100%;
+	margin-top: 6px;
+	padding: 14px 16px;
+	border-radius: 12px;
+	border: 1px solid #111;
+	background: #111;
+	color: #fff;
+	font-size: 18px;
+	cursor: pointer;
+}
+
+/* 네가 쓰는 btn-submit 클래스가 있으면 이걸 우선 적용 */
+.admin-wrap .admin-card form .btn-submit {
+	grid-column: 1/3;
+}
+
+/* 에러 메시지도 한 줄 */
+.admin-wrap .admin-card .admin-error {
+	margin: 8px 0 0;
+	color: #c62828;
+	text-align: center;
+}
+
+/* 모바일에서는 1열 폼으로 */
+@media ( max-width : 640px) {
+	.admin-wrap .admin-card form.admin-form, .admin-wrap .admin-card form {
+		grid-template-columns: 1fr;
+	}
+	.admin-wrap .admin-card form.admin-form>label, .admin-wrap .admin-card form>label,
+		.admin-wrap .admin-card form.admin-form>input, .admin-wrap .admin-card form.admin-form>select,
+		.admin-wrap .admin-card form.admin-form>textarea, .admin-wrap .admin-card form>input,
+		.admin-wrap .admin-card form>select, .admin-wrap .admin-card form>textarea,
+		.admin-wrap .admin-card form.admin-form>button, .admin-wrap .admin-card form>button
+		{
+		grid-column: auto;
+	}
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+@media ( max-width : 640px) {
+	.admin-card {
+		padding: 26px 18px 22px;
+	}
+	.admin-title {
+		font-size: 24px;
+	}
+	.admin-menu-link {
+		font-size: 16px;
+	}
+	.admin-table {
+		font-size: 15px;
+	}
+	.admin-row {
+		grid-template-columns: 1fr;
+	}
+	.admin-help {
+		grid-column: auto;
+	}
 }

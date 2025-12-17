@@ -1,5 +1,7 @@
 package kr.ac.kopo.member.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 import kr.ac.kopo.member.vo.MemberVO;
@@ -33,4 +35,12 @@ public class MemberDAOImpl implements MemberDAO {
     public MemberVO findMemberById(String id) throws Exception {
         return session.selectOne("dao.MemberDAO.findMemberById", id);
     }
+    
+    @Override
+    public List<MemberVO> selectAllMembers() throws Exception {
+        try (SqlSession session = new MyConfig().getSession()) {
+            return session.selectList("dao.MemberDAO.selectAllMembers");
+        }
+    }
+
 }

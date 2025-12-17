@@ -12,7 +12,6 @@ public class MemberMyPageController implements Controller {
 
 		MemberVO loginMember = (MemberVO) req.getSession().getAttribute("loginMember");
 		if (loginMember == null) {
-			// 로그인 안 되어 있으면 로그인 페이지로
 			return "redirect:/member/loginForm.do";
 		}
 

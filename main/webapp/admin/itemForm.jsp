@@ -22,7 +22,7 @@
 		<jsp:include page="/include/header.jsp" />
 	</header>
 
-	<section>
+	<section class="admin-wrap">
 		<div class="admin-card">
 			<h2>상품 등록</h2>
 
@@ -30,7 +30,7 @@
 				<div class="admin-error">${errorMsg}</div>
 			</c:if>
 
-			<!-- 파일 업로드 때문에 enctype 필수 -->
+	
 			<form action="${ctx}/admin/itemRegister.do" method="post"
 				enctype="multipart/form-data">
 
@@ -64,7 +64,7 @@
 				<!-- 상품 설명 -->
 				<label>상품 설명</label>
 				<textarea name="description"
-					placeholder="간단한 설명을 적어주세요. (레트로 감성 한 줄이라도 OK)"></textarea>
+					placeholder="간단한 설명을 적어주세요."></textarea>
 
 				<button type="submit" class="btn-submit">등록하기</button>
 			</form>

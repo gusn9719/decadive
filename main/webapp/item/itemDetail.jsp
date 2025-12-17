@@ -59,8 +59,6 @@
 
                 <div class="item-detail-actions">
                     <button type="submit" class="btn-cart">장바구니</button>
-
-                    <!-- 구매하기는 나중에 ORDER 모듈 붙일 때 처리 -->
                     <button type="button" class="btn-buy" onclick="alert('결제는 추후 구현 예정입니다');">
                         바로 구매
                     </button>

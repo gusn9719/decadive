@@ -8,34 +8,36 @@ import kr.ac.kopo.cart.vo.CartItemVO;
 
 public class CartServiceImpl implements CartService {
 
-	private CartDAO cartDAO;
+    private CartDAO cartDAO;
 
-	public CartServiceImpl() {
-		cartDAO = new CartDAOImpl();
-	}
+    public CartServiceImpl() {
+        cartDAO = new CartDAOImpl();
+    }
 
-	@Override
-	public List<CartItemVO> getCartItems(String memberId) throws Exception {
-		return cartDAO.selectCartItemsByMemberId(memberId);
-	}
+    @Override
+    public void addItem(String memberId, int itemNo, int quantity) throws Exception {
+        if (quantity < 1) quantity = 1;
+        cartDAO.addOrUpdateCartItem(memberId, itemNo, quantity);
+    }
 
-	@Override
-	public void addItem(String memberId, int itemNo, int quantity) throws Exception {
-		cartDAO.addOrUpdateCartItem(memberId, itemNo, quantity);
-	}
+    @Override
+    public List<CartItemVO> getCartItems(String memberId) throws Exception {
+        return cartDAO.selectCartItemsByMemberId(memberId);
+    }
 
-	@Override
-	public void updateQuantity(int cartItemNo, int quantity) throws Exception {
-		cartDAO.updateCartItemQty(cartItemNo, quantity);
-	}
+    @Override
+    public void updateQty(int cartItemNo, int quantity) throws Exception {
+        if (quantity < 1) quantity = 1;
+        cartDAO.updateCartItemQty(cartItemNo, quantity);
+    }
 
-	@Override
-	public void removeItem(int cartItemNo) throws Exception {
-		cartDAO.deleteCartItem(cartItemNo);
-	}
+    @Override
+    public void deleteItem(int cartItemNo) throws Exception {
+        cartDAO.deleteCartItem(cartItemNo);
+    }
 
-	@Override
-	public void clear(String memberId) throws Exception {
-		cartDAO.clearCart(memberId);
-	}
+    @Override
+    public void clearCart(String memberId) throws Exception {
+        cartDAO.clearCart(memberId);
+    }
 }

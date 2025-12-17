@@ -165,15 +165,62 @@
 	background: #333;
 }
 
-
 .cart-empty .user-link {
 	display: inline-block;
 	margin-top: 6px;
 	font-size: 14px;
-	color: #222; /* 진한 글자색으로 변경 */
+	color: #222;
 	text-decoration: underline;
 }
 
 .cart-empty .user-link:hover {
-	color: #e63946; /* 레트로 포인트 컬러 */
+	color: #e63946;
+}
+
+/* ===== 수량 변경/삭제 폼 ===== */
+.cart-item-qty-price {
+	min-width: 220px;
+	gap: 8px;
+}
+
+.qty-form {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	justify-content: flex-end;
+	margin-top: 6px;
+}
+
+.qty-input {
+	width: 72px;
+	height: 34px;
+	padding: 0 10px;
+	border: 1px solid #333;
+	border-radius: 6px;
+	background: #fff;
+	font-size: 14px;
+	text-align: center;
+	outline: none;
+}
+
+.qty-input:focus {
+	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.15);
+}
+
+.qty-btn, .del-btn {
+	padding: 8px 12px;
+	border: 1px solid #333;
+	border-radius: 6px;
+	background: #fff;
+	color: #111;
+	cursor: pointer;
+	font-size: 13px;
+}
+
+.qty-btn:hover, .del-btn:hover {
+	background: #f0f0f0;
+}
+
+.del-form {
+	margin-top: 2px;
 }

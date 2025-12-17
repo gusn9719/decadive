@@ -31,4 +31,25 @@ public class ItemServiceImpl implements ItemService {
 		itemDAO.insertItem(item); // itemNo + imagePath 저장
 		itemDAO.insertItemDetail(item); // description 저장
 	}
+
+	@Override
+	public void updateItem(ItemVO item) throws Exception {
+		itemDAO.updateItem(item);
+
+		String desc = item.getDescription();
+		if (desc != null) {
+			desc = desc.trim();
+			if (desc.length() > 0) {
+				item.setDescription(desc);
+				itemDAO.upsertItemDetail(item);
+			}
+		}
+	}
+
+	@Override
+	public void deleteItem(int itemNo) throws Exception {
+		itemDAO.deleteCartItemsByItemNo(itemNo);
+		itemDAO.deleteItemDetail(itemNo);
+		itemDAO.deleteItem(itemNo);
+	}
 }

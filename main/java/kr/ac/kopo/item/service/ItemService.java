@@ -14,4 +14,8 @@ public interface ItemService {
 
 	// 관리자 상품 등록
 	void registerItem(ItemVO item) throws Exception;
+
+	void updateItem(ItemVO item) throws Exception;
+
+	void deleteItem(int itemNo) throws Exception;
 }

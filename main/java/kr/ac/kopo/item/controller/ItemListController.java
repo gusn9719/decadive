@@ -35,6 +35,10 @@ public class ItemListController implements Controller {
 			param.setName(keyword);
 		}
 
+		System.out.println("era param=[" + request.getParameter("era") + "]");
+		System.out.println("category param=[" + request.getParameter("category") + "]");
+
+		
 		List<ItemVO> itemList = itemService.getItemList(param);
 
 		request.setAttribute("itemList", itemList);

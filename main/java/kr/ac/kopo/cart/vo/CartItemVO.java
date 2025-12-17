@@ -10,6 +10,7 @@ public class CartItemVO {
 	private String itemName;
 	private int price;
 	private String imagePath;
+	private String description;
 
 	public CartItemVO() {
 	}
@@ -76,6 +77,14 @@ public class CartItemVO {
 
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Override
